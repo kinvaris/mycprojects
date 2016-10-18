@@ -47,6 +47,8 @@ int main(int argc, char *argv[])
     Person_destroy(jonas);
     printf("Jonas is at memory location %p:\n", jonas);
     Person_print(jonas);    
+    // will fail
+    Person_destroy(jonas);
 
     return 0;
 }

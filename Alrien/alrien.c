@@ -5,6 +5,7 @@
 #include <string.h>
 #include <sys/un.h>
 #include <stdlib.h>
+#include <sys/types.h>
 #include <arpa/inet.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -51,11 +52,13 @@ int main(int argc, char *argv[])
         
         int session;
         char buffer[BUFFER_SIZE];
+        socklen_t client_addr_size;
         
         //put buffer full of zero's
         bzero(buffer,BUFFER_SIZE);
         
-        session = accept(sock, (struct sockaddr*)&client_addr, sizeof(client_addr));      
+        client_addr_size = sizeof(struct sockaddr_in);
+        session = accept(sock, (struct sockaddr*)&client_addr, &client_addr_size);      
         if (session == -1) {
             printf("Connection failed or no connections!");
             continue;

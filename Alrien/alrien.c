@@ -19,8 +19,8 @@ int main(int argc, char *argv[])
     // asci to int
     int port = atoi(argv[2]);
     // tcp socket for server & client
-    int sock, r, w;
-    struct sockaddr_in server_addr, client_addr;
+    int sock;
+    struct sockaddr_in server_addr;
 
     printf("Starting alrien simple key value store...\n");
     printf("IP ADDRESS: %s\n", ip_address);
@@ -50,8 +50,9 @@ int main(int argc, char *argv[])
     while(1) {
         printf("Checking if connections are coming in ...\n");
         
-        int session;
+        int session, r, w;
         char buffer[BUFFER_SIZE];
+        struct sockaddr_in client_addr;
         socklen_t client_addr_size;
         
         //put buffer full of zero's
@@ -63,9 +64,11 @@ int main(int argc, char *argv[])
             printf("Connection failed or no connections!");
             continue;
         }
-        
+       
+        printf("Accepting connection from %s:%d\n", inet_ntoa(client_addr.sin_addr),ntohs(client_addr.sin_port));
+ 
         //read from client session socket
-        r = read(session,buffer,255);
+        r = read(session,buffer,BUFFER_SIZE);
         if (r < 0) { 
             printf("Failed to read from socket!");
             continue;
@@ -83,8 +86,6 @@ int main(int argc, char *argv[])
       
         //close session socket
         close(session);
-
-        sleep(1);
     }
 
     //close server socket

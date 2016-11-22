@@ -11,7 +11,7 @@
 #include <netinet/in.h>
 
 #define LISTEN_BACKLOG 50
-#define BUFFER_SIZE 256
+#define BUFFER_SIZE 7
 
 int main(int argc, char *argv[])
 {
@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
     while(1) {
         printf("Checking if connections are coming in ...\n");
         
-        int session, r, w;
+        int session, datasize, r, w;
         char buffer[BUFFER_SIZE];
         struct sockaddr_in client_addr;
         socklen_t client_addr_size;
@@ -67,7 +67,9 @@ int main(int argc, char *argv[])
        
         printf("Accepting connection from %s:%d\n", inet_ntoa(client_addr.sin_addr),ntohs(client_addr.sin_port));
  
-        //read from client session socket
+        //read first 7 chars from string
+
+        read(session,&datasize,sizeof(datasize));
         r = read(session,buffer,BUFFER_SIZE);
         if (r < 0) { 
             printf("Failed to read from socket!");
@@ -75,7 +77,7 @@ int main(int argc, char *argv[])
         }
         
         //display the message from client
-        printf("Here is the message: %s\n",buffer);
+        printf("Here is the message: %s, %d\n",buffer,ntohs(datasize));
 
         //write to client
         w = write(session,"I got your message",18);

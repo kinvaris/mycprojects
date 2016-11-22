@@ -1,6 +1,8 @@
 #!/usr/bin/python
 
 import sys
+import json
+import struct
 import socket
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -14,7 +16,8 @@ value = "bar"
 the_dict = { 'key': key, 'value': value }
 
 if len(str(the_dict)) < 1000000:
-    sock.sendall("{0}_{1}".format(len(str(the_dict)), the_dict))
+    sock.send(str(len(json.dumps(the_dict))))
+    sock.send(str(the_dict))
     print sock.recv(18)
 else:
     print "The provided key and value override the max. amount of chars"

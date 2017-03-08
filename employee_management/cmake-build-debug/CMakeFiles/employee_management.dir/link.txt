@@ -1,0 +1,1 @@
+/usr/bin/c++   -g   CMakeFiles/employee_management.dir/main.cpp.o CMakeFiles/employee_management.dir/src/Person.cpp.o  -o employee_management 

@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/jonas/Projects/mycprojects/employee_management/main.cpp
+iostream
+-
+src/Person.h
+/home/jonas/Projects/mycprojects/employee_management/src/Person.h
+
+/home/jonas/Projects/mycprojects/employee_management/src/Person.cpp
+Person.h
+/home/jonas/Projects/mycprojects/employee_management/src/Person.h
+
+/home/jonas/Projects/mycprojects/employee_management/src/Person.h
+string
+-
+
